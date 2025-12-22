@@ -1,0 +1,33 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Product } from "@/types/product";
+import { Card } from "@/components/ui/card";
+import { formatPrice } from "@/utils/formatPrice";
+
+interface ProductCardProps {
+  product: Product;
+}
+
+export function ProductCard({ product }: ProductCardProps) {
+  return (
+    <Link href={`/products/${product.id}`} className="block">
+      <Card className="p-4 hover:shadow-md transition">
+        <div className="relative aspect-square mb-3">
+          <Image
+            src={product.images[0]}
+            alt={product.title}
+            fill
+            className="object-cover rounded-md"
+            unoptimized
+          />
+        </div>
+
+        <h3 className="text-sm font-medium line-clamp-2">{product.title}</h3>
+
+        <p className="mt-1 text-sm font-semibold">
+          {formatPrice(product.price)}
+        </p>
+      </Card>
+    </Link>
+  );
+}
