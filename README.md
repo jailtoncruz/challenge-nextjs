@@ -1,5 +1,12 @@
 # 🛍️ Product Listing – Stefanini Next.js Challenge
 
+<div align="center">
+
+[![Maintainability](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs/maintainability.svg)](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs)
+[![Code Coverage](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs/coverage.svg)](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs)
+
+</div>
+
 This project is a product listing application built using **Next.js**, **React**, and **TypeScript**, consuming the public API from **Platzi Fake Store**.
 The goal of this challenge is to demonstrate frontend architecture, performance awareness, accessibility, and code quality using modern React and Next.js practices.
 
