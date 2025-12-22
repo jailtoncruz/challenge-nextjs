@@ -1,4 +1,5 @@
 import { Product } from "@/types/product";
+import { normalizeImages } from "@/utils/normalizeImages";
 
 const API_URL = "https://api.escuelajs.co/api/v1/products";
 
@@ -10,7 +11,12 @@ export async function getProducts(): Promise<Product[]> {
   if (!response.ok) {
     throw new Error("Failed to fetch products");
   }
-  return response.json();
+  const products = await response.json();
+
+  return products.map((product: Product) => ({
+    ...product,
+    images: normalizeImages(product.images),
+  }));
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
@@ -26,5 +32,10 @@ export async function getProductById(id: string): Promise<Product | null> {
     throw new Error("Failed to fetch product");
   }
 
-  return response.json();
+  const product = await response.json();
+
+  return {
+    ...product,
+    images: normalizeImages(product.images),
+  };
 }

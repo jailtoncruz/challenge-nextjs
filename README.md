@@ -4,6 +4,7 @@
 
 [![Maintainability](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs/maintainability.svg)](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs)
 [![Code Coverage](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs/coverage.svg)](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs)
+[Access application](https://challenge-nextjs.tomcruz.dev)
 
 </div>
 

@@ -14,7 +14,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <Card className="p-4 hover:shadow-md transition">
         <div className="relative aspect-square mb-3">
           <Image
-            src={product.images[0]}
+            src={product.images[0] ?? "https://placehold.co/600x400"}
             alt={product.title}
             fill
             className="object-cover rounded-md"

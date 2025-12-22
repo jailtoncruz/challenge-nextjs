@@ -15,11 +15,12 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
     <div className="grid gap-3">
       <div className="relative aspect-square">
         <Image
-          src={displayingImage}
+          src={displayingImage ?? "https://placehold.co/600x400"}
           alt={title}
           fill
           priority
           className="object-cover rounded-lg"
+          unoptimized
         />
       </div>
 
@@ -32,7 +33,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
               onClick={() => setDisplayingImage(image)}
             >
               <Image
-                src={image}
+                src={image ?? "https://placehold.co/600x400"}
                 alt={`${title} image ${index + 2}`}
                 fill
                 className="object-cover rounded-md"
