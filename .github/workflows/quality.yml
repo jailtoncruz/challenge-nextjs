@@ -32,9 +32,7 @@ jobs:
         run: pnpm test:coverage
 
       - name: Upload coverage to Qlty
-        env:
-          QLTY_TOKEN: ${{ secrets.QLTY_TOKEN }}
-        run: |
-          curl -X POST https://api.qlty.sh/coverage \
-            -H "Authorization: Bearer $QLTY_TOKEN" \
-            -F "file=@coverage/coverage-final.json"
+        uses: qltysh/qlty-action/coverage@v2
+        with:
+          token: ${{ secrets.QLTY_TOKEN }}
+          files: coverage/lcov.info
