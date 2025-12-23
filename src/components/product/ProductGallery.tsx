@@ -19,6 +19,8 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
           alt={title}
           fill
           priority
+          width={600}
+          height={400}
           className="object-cover rounded-lg"
           unoptimized
         />
@@ -37,6 +39,10 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
                 alt={`${title} image ${index + 2}`}
                 fill
                 className="object-cover rounded-md"
+                priority={index === 0}
+                width={600}
+                height={400}
+                unoptimized
               />
             </div>
           ))}

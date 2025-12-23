@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { getProductById } from "@/services/products";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetails } from "@/components/product/ProductDetails";
@@ -8,6 +10,23 @@ interface ProductPageProps {
     id: string;
     source?: "api" | "generator";
   }>;
+}
+
+export async function generateStaticParams() {
+  const res = await fetch(
+    "https://api.escuelajs.co/api/v1/products?offset=0&limit=20",
+    { cache: "force-cache" }
+  );
+
+  if (!res.ok) {
+    return [];
+  }
+
+  const products: { id: number }[] = await res.json();
+
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
