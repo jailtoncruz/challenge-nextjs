@@ -1,14 +1,45 @@
 import { getProducts } from "@/services/products";
-import { ProductGrid } from "@/components/product/ProductGrid";
+import { CategoryFilter } from "@/components/product/CategoryFilter";
+import { InfiniteProductsList } from "@/components/product/InfiniteProductList";
+import { SourceSelector } from "@/components/product/SourceSelector";
 
-export default async function Page() {
-  const products = await getProducts();
+interface PageProps {
+  searchParams?: Promise<{
+    category?: string;
+    source?: "api" | "generator";
+  }>;
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const category = resolvedSearchParams?.category;
+  const source = resolvedSearchParams?.source;
+
+  const { items } = await getProducts({
+    page: 1,
+    limit: 4,
+    category,
+    source: source ?? "api",
+  });
 
   return (
     <main className="container mx-auto px-4 py-6">
-      <h1 className="text-2xl font-semibold mb-6">Product Listing</h1>
+      <header className="flex flex-row justify-between items-center">
+        <h1 className="text-2xl font-semibold mb-4">Product Listing</h1>
+        <SourceSelector />
+      </header>
 
-      <ProductGrid products={products} />
+      <CategoryFilter />
+
+      {items.length > 0 ? (
+        <InfiniteProductsList
+          initialProducts={items}
+          category={category}
+          source={source ?? "api"}
+        />
+      ) : (
+        <div>No products found.</div>
+      )}
     </main>
   );
 }

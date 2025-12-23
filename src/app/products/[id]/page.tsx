@@ -6,11 +6,12 @@ import { notFound } from "next/navigation";
 interface ProductPageProps {
   params: Promise<{
     id: string;
+    source?: "api" | "generator";
   }>;
 }
 
 export async function generateStaticParams() {
-  const products = await getProducts();
+  const { items: products } = await getProducts();
 
   return products.map((product) => ({
     id: product.id.toString(),
@@ -18,9 +19,9 @@ export async function generateStaticParams() {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { id } = await params;
+  const { id, source } = await params;
 
-  const product = await getProductById(id);
+  const product = await getProductById({ id: Number(id), source });
 
   if (!product) {
     notFound();

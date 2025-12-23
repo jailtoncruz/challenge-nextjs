@@ -1,200 +1,211 @@
-# 🛍️ Product Listing – Stefanini Next.js Challenge
+# 🛍️ Product Listing App — Desafio Técnico
 
 <div align="center">
 
 [![Maintainability](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs/maintainability.svg)](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs)
 [![Code Coverage](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs/coverage.svg)](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs)
-[Access application](https://challenge-nextjs.tomcruz.dev)
 
 </div>
 
-This project is a product listing application built using **Next.js**, **React**, and **TypeScript**, consuming the public API from **Platzi Fake Store**.
-The goal of this challenge is to demonstrate frontend architecture, performance awareness, accessibility, and code quality using modern React and Next.js practices.
+Aplicação desenvolvida em **Next.js (App Router)** para listagem e visualização de produtos, consumindo uma **API pública** e também um **backend mock paginado**, com foco em **performance, arquitetura limpa e experiência do usuário**.
+
+O projeto foi pensado para simular um **cenário real de produção**, indo além do mínimo solicitado no desafio.
+
+[Acessar aplicação](https://challenge-nextjs.tomcruz.dev)
 
 ---
 
-## 🚀 Tech Stack
+## 🚀 Tecnologias Utilizadas
 
 - **Next.js (App Router)**
 - **React**
 - **TypeScript**
 - **Shadcn/UI** (Design System)
-- **Tailwind CSS**
-- **Jest / Testing Library** (unit tests)
+- **Vitest** (testes unitários)
+- **Docker**
+- **GitHub Actions** (CI)
+- **Qlty** (coverage)
 
 ---
 
-## 📦 Features
+## 🎯 Funcionalidades Implementadas
 
-### ✅ Product Listing
+### 📦 Listagem de Produtos
 
-- Fetches products from:
-  `https://api.escuelajs.co/api/v1/products`
-- Displays product cards with:
-
-  - Image
-  - Title
-  - Price
-
-- Fully responsive layout
+- Exibição de produtos em formato de **cards**
+- Informações principais:
+  - Imagem
+  - Título
+  - Preço
+- Layout totalmente **responsivo**
+- Renderização inicial com **SSR / SSG**
 
 ---
 
-### ✅ Product Details
+### 🔍 Detalhes do Produto
 
-- Dynamic product detail page
-- Displays:
-
-  - Title
-  - Description
-  - Price
-  - Category
-  - Image gallery
-
-- Reuses shared UI components
+- Página dedicada para visualização de um produto
+- Informações exibidas:
+  - Título
+  - Descrição
+  - Preço
+  - Categoria
+  - Galeria de imagens
+- Funciona com **links diretos (deep link)** e refresh da página
 
 ---
 
-### ✅ Performance & Quality
+### 🧭 Filtro por Categoria
 
-- Server-Side Rendering (SSR) and Static Site Generation (SSG)
-- Lazy loading images
-- Optimized Core Web Vitals
-- Unit tests for critical components
-- Accessibility best practices
-
----
-
-### ✨ Optional Enhancements
-
-- Category filtering
-- Pagination or infinite scroll
-- Incremental Static Regeneration (ISR)
-
----
-
-## 🧠 Architectural Decisions
-
-### 📁 Folder Structure
-
-The project follows a clear separation of concerns:
+- Filtro de produtos por categoria
+- Estado controlado via **query params**
+- URLs compartilháveis, por exemplo:
 
 ```
-src/
-├── app/              # Routing and rendering logic (App Router)
-├── components/
-│   ├── ui/           # Design system (Shadcn-based components)
-│   └── product/      # Product-specific components
-├── services/         # API communication
-├── types/            # TypeScript domain models
-├── utils/            # Helpers and constants
-├── hooks/            # Custom hooks (client-side when needed)
-├── styles/           # Global styles
-└── tests/            # Unit tests
+/?category=Electronics
+
 ```
 
-This structure keeps UI, domain logic, and data access cleanly separated, making the application easier to maintain and scale.
+---
+
+### ♾️ Infinite Scroll com Paginação
+
+- Scroll infinito com **paginação real**
+- Primeira página renderizada no **servidor (SSR)**
+- Próximas páginas carregadas sob demanda no client
+- Implementado com **IntersectionObserver**
+- Comportamento semelhante a e-commerces reais
 
 ---
 
-### 🧩 Design System
+### 🔄 Alternância de Fonte de Dados (Diferencial)
 
-The project uses **Shadcn/UI** as the base design system, allowing:
+O projeto suporta **duas fontes de dados**, controladas por um seletor na interface:
 
-- Consistent UI across screens
-- Accessible components by default
-- Easy customization with Tailwind CSS
+1. **API Real**
 
-Reusable components such as `Button`, `Card`, and `Modal` are shared between the listing and product detail views.
+- Fonte: [https://api.escuelajs.co](https://api.escuelajs.co)
+- Consumo via API interna do projeto
 
----
+2. **Mock Generator (Infinito)**
 
-### 🌐 Data Fetching Strategy
+- Backend fake implementado no servidor
+- Geração determinística de produtos por ID
+- Paginação infinita simulando um backend real
 
-- **Product Listing**
-  Uses **Static Site Generation (SSG)** with revalidation to improve performance and SEO.
+O usuário pode alternar entre as fontes diretamente na UI.
 
-- **Product Details**
-  Uses **dynamic routes** with static generation where applicable.
+Exemplo de URL:
 
-This hybrid approach balances performance, scalability, and data freshness.
+```
 
----
+/?source=generator&category=Clothes
 
-### ⚡ Performance Considerations
-
-- `next/image` for optimized image loading
-- Lazy loading where applicable
-- Minimal client-side JavaScript
-- Server Components by default
+```
 
 ---
 
-### ♿ Accessibility
+### 🧠 Arquitetura de Backend (API Interna)
 
-Accessibility was considered from the start:
+Foi criada uma **API interna** utilizando o App Router do Next.js:
 
-- Semantic HTML
-- Keyboard navigation
-- Accessible modals and buttons
-- Alternative text for images
+#### Endpoints principais:
+
+- `GET /api/products`
+
+  - Parâmetros:
+    - `page`
+    - `limit`
+    - `category`
+    - `source` (`api` | `generator`)
+
+- `GET /api/products/[id]`
+  - Parâmetros:
+    - `source` (`api` | `generator`)
+
+Essa abordagem permite:
+
+- Centralizar a lógica de dados
+- Alternar facilmente entre backend real e mock
+- Manter SSR e Infinite Scroll funcionando corretamente
 
 ---
 
-### 🧪 Testing Strategy
+## ⚡ Performance e Qualidade
 
-Unit tests focus on:
-
-- Reusable UI components
-- Product card rendering
-- Loading and error states
-
-The goal is to validate critical behavior without over-testing implementation details.
+- **SSR / SSG** para carregamento rápido
+- **Lazy loading** de imagens
+- Infinite scroll eficiente
+- Normalização e fallback de imagens inválidas
+- Código desacoplado entre Server e Client Components
 
 ---
 
-## 🛠️ Getting Started
+## ♿ Acessibilidade
 
-### Install dependencies
+- Uso de componentes acessíveis do Shadcn/UI
+- Estrutura semântica
+- Navegação funcional por teclado
+- Labels e textos adequados para leitores de tela
+
+---
+
+## 🧪 Testes
+
+- Testes unitários com **Vitest**
+- Ambiente configurado para Next.js
+- Relatório de cobertura gerado automaticamente
+- Envio de coverage para **Qlty** via GitHub Actions
+
+---
+
+## 🤖 CI / CD
+
+- Pipeline com **GitHub Actions**
+- Execução automática de:
+  - Instalação
+  - Testes
+  - Coverage
+- Projeto preparado para deploy contínuo
+
+---
+
+## 🐳 Docker
+
+O projeto pode ser executado via Docker:
 
 ```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
+docker build -t product-listing-app .
+docker run -p 3000:3000 product-listing-app
 ```
 
-### Run the development server
+A aplicação ficará disponível em:
 
-```bash
-npm run dev
 ```
-
-The app will be available at:
-👉 `http://localhost:3000`
+http://localhost:3000
+```
 
 ---
 
-## 🔮 Possible Improvements
+## 📝 Observações Finais
 
-With more time, the following improvements could be implemented:
+Este projeto foi desenvolvido com foco em:
 
-- Advanced caching strategies
-- Skeleton loaders
-- E2E tests (Playwright)
-- Internationalization (i18n)
-- Enhanced Core Web Vitals monitoring
+- **Arquitetura escalável**
+- **Boas práticas de frontend moderno**
+- **Simulação de cenários reais de produção**
+- **Código limpo e bem organizado**
+
+Vários diferenciais foram implementados além do solicitado, como:
+
+- API interna
+- Mock paginado infinito
+- Alternância de fonte de dados
+- SSR + Infinite Scroll combinados
 
 ---
 
-## 📌 Final Notes
+## 👨‍💻 Autor
 
-This project was designed to prioritize:
-
-- Clean architecture
-- Performance
-- Accessibility
-- Reusability
-
-Trade-offs and technical decisions were made intentionally to balance development speed and code quality.
+Desenvolvido por **Jailton Cruz**
+Desafio técnico — Frontend / Full Stack

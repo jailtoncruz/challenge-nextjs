@@ -6,11 +6,12 @@ import { formatPrice } from "@/utils/formatPrice";
 
 interface ProductCardProps {
   product: Product;
+  source?: "api" | "generator";
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, source }: ProductCardProps) {
   return (
-    <Link href={`/products/${product.id}`} className="block">
+    <Link href={`/products/${product.id}?source=${source}`} className="block">
       <Card className="p-4 hover:shadow-md transition">
         <div className="relative aspect-square mb-3">
           <Image
