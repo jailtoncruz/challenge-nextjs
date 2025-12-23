@@ -1,4 +1,6 @@
-# 🛍️ Product Listing App — Desafio Técnico
+# 🛍️ Product Listing App — Desafio Técnico Stefanini - NextJS
+
+---
 
 <div align="center">
 

@@ -24,7 +24,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <main className="container mx-auto px-4 py-6">
-      <header className="flex flex-row justify-between items-center">
+      <header className="flex flex-wrap items-center mb-4 max-[500px]:justify-center justify-between">
         <h1 className="text-2xl font-semibold mb-4">Product Listing</h1>
         <SourceSelector />
       </header>
@@ -38,7 +38,7 @@ export default async function Page({ searchParams }: PageProps) {
           source={source ?? "api"}
         />
       ) : (
-        <div>No products found.</div>
+        <div role="status">No products found.</div>
       )}
     </main>
   );

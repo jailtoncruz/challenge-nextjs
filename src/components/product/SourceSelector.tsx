@@ -26,14 +26,16 @@ export function SourceSelector() {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-sm text-muted-foreground">Data source:</span>
+      <label htmlFor="category" className="text-sm text-muted-foreground">
+        Data source:
+      </label>
 
       <Select value={currentSource} onValueChange={handleChange}>
         <SelectTrigger className="w-55">
           <SelectValue placeholder="Select source" />
         </SelectTrigger>
 
-        <SelectContent>
+        <SelectContent id="category">
           <SelectItem value="api">Real API (EscuelaJS)</SelectItem>
 
           <SelectItem value="generator">Mock Generator (Infinite)</SelectItem>

@@ -20,9 +20,6 @@ export function ProductCard({ product, source }: ProductCardProps) {
             fill
             className="object-cover rounded-md"
             unoptimized
-            priority
-            width={600}
-            height={400}
           />
         </div>
 

@@ -33,14 +33,16 @@ export function CategoryFilter() {
       <Button
         variant={!activeCategory ? "default" : "outline"}
         onClick={() => handleFilter()}
+        aria-current={!activeCategory ? "true" : undefined}
       >
-        All
+        All Categories
       </Button>
 
       {CATEGORIES.map((category) => (
         <Button
           key={category}
           variant={activeCategory === category ? "default" : "outline"}
+          aria-current={activeCategory === category ? "true" : undefined}
           onClick={() => handleFilter(category)}
         >
           {category}

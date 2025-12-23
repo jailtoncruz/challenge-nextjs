@@ -18,9 +18,6 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
           src={displayingImage ?? "https://placehold.co/600x400"}
           alt={title}
           fill
-          priority
-          width={600}
-          height={400}
           className="object-cover rounded-lg"
           unoptimized
         />
