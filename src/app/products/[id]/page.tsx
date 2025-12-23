@@ -1,4 +1,4 @@
-import { getProductById, getProducts } from "@/services/products";
+import { getProductById } from "@/services/products";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetails } from "@/components/product/ProductDetails";
 import { notFound } from "next/navigation";
@@ -8,14 +8,6 @@ interface ProductPageProps {
     id: string;
     source?: "api" | "generator";
   }>;
-}
-
-export async function generateStaticParams() {
-  const { items: products } = await getProducts();
-
-  return products.map((product) => ({
-    id: product.id.toString(),
-  }));
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
