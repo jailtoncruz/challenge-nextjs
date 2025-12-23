@@ -1,7 +1,5 @@
 # 🛍️ Product Listing App — Desafio Técnico Stefanini - NextJS
 
----
-
 <div align="center">
 
 [![Maintainability](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs/maintainability.svg)](https://qlty.sh/gh/jailtoncruz/projects/challenge-nextjs)
