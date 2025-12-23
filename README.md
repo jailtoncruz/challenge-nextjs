@@ -34,11 +34,13 @@ O projeto foi pensado para simular um **cenário real de produção**, indo alé
 
 - Exibição de produtos em formato de **cards**
 - Informações principais:
+
   - Imagem
   - Título
   - Preço
+
 - Layout totalmente **responsivo**
-- Renderização inicial com **SSR / SSG**
+- Renderização inicial no servidor utilizando **Server Side Rendering (SSR)**
 
 ---
 
@@ -46,12 +48,15 @@ O projeto foi pensado para simular um **cenário real de produção**, indo alé
 
 - Página dedicada para visualização de um produto
 - Informações exibidas:
+
   - Título
   - Descrição
   - Preço
   - Categoria
   - Galeria de imagens
+
 - Funciona com **links diretos (deep link)** e refresh da página
+- Produtos da API externa são renderizados utilizando **Static Site Generation (SSG)**, com fallback dinâmico quando necessário
 
 ---
 
@@ -63,7 +68,6 @@ O projeto foi pensado para simular um **cenário real de produção**, indo alé
 
 ```
 /?category=Electronics
-
 ```
 
 ---
@@ -84,76 +88,81 @@ O projeto suporta **duas fontes de dados**, controladas por um seletor na interf
 
 1. **API Real**
 
-- Fonte: [https://api.escuelajs.co](https://api.escuelajs.co)
-- Consumo via API interna do projeto
+   - Fonte: [https://api.escuelajs.co](https://api.escuelajs.co)
+   - Consumo via API interna do projeto
 
 2. **Mock Generator (Infinito)**
 
-- Backend fake implementado no servidor
-- Geração determinística de produtos por ID
-- Paginação infinita simulando um backend real
-
-O usuário pode alternar entre as fontes diretamente na UI.
+   - Backend fake implementado no servidor
+   - Geração determinística de produtos por ID
+   - Paginação infinita simulando um backend real
 
 Exemplo de URL:
 
 ```
-
 /?source=generator&category=Clothes
-
 ```
 
 ---
 
-### 🧠 Arquitetura de Backend (API Interna)
+## 🧠 Arquitetura de Backend (API Interna)
 
-Foi criada uma **API interna** utilizando o App Router do Next.js:
+Foi criada uma **API interna** utilizando o App Router do Next.js.
 
-#### Endpoints principais:
+### Endpoints principais:
 
 - `GET /api/products`
 
   - Parâmetros:
+
     - `page`
     - `limit`
     - `category`
     - `source` (`api` | `generator`)
 
 - `GET /api/products/[id]`
+
   - Parâmetros:
+
     - `source` (`api` | `generator`)
 
 Essa abordagem permite:
 
 - Centralizar a lógica de dados
 - Alternar facilmente entre backend real e mock
-- Manter SSR e Infinite Scroll funcionando corretamente
+- Manter SSR, SSG e Infinite Scroll funcionando de forma consistente
 
 ---
 
 ## ⚡ Performance e Qualidade
 
-- **SSR / SSG** para carregamento rápido
-- **Lazy loading** de imagens
-- Infinite scroll eficiente
-- Normalização e fallback de imagens inválidas
-- Código desacoplado entre Server e Client Components
+- Uso combinado de **SSR e SSG**, conforme a natureza da página
+- **Lazy loading** de imagens com `next/image`
+- Infinite scroll eficiente e progressivo
+- Código desacoplado entre **Server Components** e **Client Components**
+- Atenção a boas práticas relacionadas a **Core Web Vitals**
 
 ---
 
 ## ♿ Acessibilidade
 
-- Uso de componentes acessíveis do Shadcn/UI
-- Estrutura semântica
-- Navegação funcional por teclado
-- Labels e textos adequados para leitores de tela
+- Uso de HTML semântico e componentes acessíveis do Shadcn/UI
+- Navegação funcional por teclado (tabulação lógica)
+- Labels associados a inputs
+- Indicação de estado ativo em filtros (`aria-current`)
+- Textos alternativos em imagens
 
 ---
 
 ## 🧪 Testes
 
-- Testes unitários com **Vitest**
-- Ambiente configurado para Next.js
+- Testes unitários implementados com **Vitest**
+- Cobertura abrangendo:
+
+  - Componentes de UI
+  - Componentes de domínio
+  - Endpoints da API interna
+
 - Relatório de cobertura gerado automaticamente
 - Envio de coverage para **Qlty** via GitHub Actions
 
@@ -161,11 +170,13 @@ Essa abordagem permite:
 
 ## 🤖 CI / CD
 
-- Pipeline com **GitHub Actions**
+- Pipeline automatizado com **GitHub Actions**
 - Execução automática de:
-  - Instalação
+
+  - Instalação de dependências
   - Testes
-  - Coverage
+  - Geração de coverage
+
 - Projeto preparado para deploy contínuo
 
 ---
@@ -193,15 +204,15 @@ Este projeto foi desenvolvido com foco em:
 
 - **Arquitetura escalável**
 - **Boas práticas de frontend moderno**
-- **Simulação de cenários reais de produção**
-- **Código limpo e bem organizado**
+- **Performance e acessibilidade**
+- **Código limpo, testável e bem organizado**
 
-Vários diferenciais foram implementados além do solicitado, como:
+Além dos requisitos solicitados, foram implementados diferenciais como:
 
 - API interna
 - Mock paginado infinito
 - Alternância de fonte de dados
-- SSR + Infinite Scroll combinados
+- Uso combinado de **SSR e SSG**
 
 ---
 
