@@ -20,7 +20,7 @@ describe("CategoryFilter", () => {
   it("renders All button and all categories", () => {
     render(<CategoryFilter />);
 
-    expect(screen.getByText("All")).toBeInTheDocument();
+    expect(screen.getByText("All Categories")).toBeInTheDocument();
 
     expect(screen.getByText("Clothes")).toBeInTheDocument();
     expect(screen.getByText("Electronics")).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe("CategoryFilter", () => {
   it("removes category filter when clicking All", () => {
     render(<CategoryFilter />);
 
-    fireEvent.click(screen.getByText("All"));
+    fireEvent.click(screen.getByText("All Categories"));
 
     expect(pushMock).toHaveBeenCalledWith("/?");
   });
